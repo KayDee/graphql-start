@@ -28,4 +28,4 @@ app.listen(4000, () => {
   console.log('Listening')
 })
 
-export default app
+module.exports = { app }
