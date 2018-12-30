@@ -1,4 +1,4 @@
-import app from './app'
+let {app} = require('./app')
 
 const comp = app
-export { comp }
+module.exports = { comp }
