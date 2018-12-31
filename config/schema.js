@@ -8,7 +8,7 @@ const {
   GraphQLInt
 } = graphql
 
-const DUMMY_BOOK = [
+const DUMMY_BOOKS = [
   {
     id: '1',
     name: 'Name of the Wind',
