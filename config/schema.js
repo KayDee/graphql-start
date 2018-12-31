@@ -50,20 +50,26 @@ const DUMMY_AUTHORS = [
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    genre: { type: GraphQLString }
-  }
+    genre: { type: GraphQLString },
+    author: {
+      type: AuthorType,
+      resolve: (parent, args) => {
+        return DUMMY_AUTHORS.find(author => author.id == parent.authorID)
+      }
+    }
+  })
 })
 
 const AuthorType = new GraphQLObjectType({
   name: 'Author',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     age: { type: GraphQLInt }
-  }
+  })
 })
 
 
