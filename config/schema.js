@@ -13,16 +13,19 @@ const DUMMY_BOOK = [
     id: '1',
     name: 'Name of the Wind',
     genre: 'Fantasy',
+    authorID: '1'
   },
   {
     id: '2',
     name: 'The Final Empire',
     genre: 'Fantasy',
+    authorID: '2'
   },
   {
     id: '3',
     name: 'The Long Earth',
     genre: 'Sci-Fi',
+    authorID: '3'
   }
 ]
 
