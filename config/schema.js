@@ -4,10 +4,11 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLID,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt
 } = graphql
 
-const DUMMY = [
+const DUMMY_BOOK = [
   {
     id: '1',
     name: 'Name of the Wind',
@@ -25,6 +26,23 @@ const DUMMY = [
   }
 ]
 
+const DUMMY_AUTHORS = [
+  {
+    id: '1',
+    name: 'Patrick Rothfuss',
+    age: 44
+  },
+  {
+    id: '2',
+    name: 'Brandon Sanderson',
+    age: 42
+  },
+  {
+    id: '3',
+    name: 'Terry Pratchett',
+    age: 66
+  }
+]
 
 
 const BookType = new GraphQLObjectType({
@@ -36,6 +54,16 @@ const BookType = new GraphQLObjectType({
   }
 })
 
+const AuthorType = new GraphQLObjectType({
+  name: 'Author',
+  fields: {
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    age: { type: GraphQLInt }
+  }
+})
+
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -43,7 +71,14 @@ const RootQuery = new GraphQLObjectType({
       type: BookType,
       args: { id: { type: GraphQLID } },
       resolve: (parent, args) => {
-        return DUMMY.find(book => book.id == args.id)
+        return DUMMY_BOOKS.find(book => book.id == args.id)
+      }
+    },
+    author: {
+      type: AuthorType,
+      args: { id: { type: GraphQLID } },
+      resolve: (parent, args) => {
+        return DUMMY_AUTHORS.find(author => author.id == args.id)
       }
     }
   }

@@ -13,11 +13,11 @@ app.use(function(req, res, next) {
 
 app.post('/graphql', graphqlHTTP({
   schema,
-  // graphiql: true
+  graphiql: true
 }))
 app.get('/graphql', graphqlHTTP({
   schema,
-  // graphiql: true
+  graphiql: true
 }))
 
 // app.use('/', (req, res) => {
