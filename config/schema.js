@@ -91,8 +91,9 @@ const BookType = new GraphQLObjectType({
       type: AuthorType,
       resolve: (parent, args) => {
         // return DUMMY_AUTHORS.find(author => author.id == parent.authorID)
-        console.log(collection[1].findOne({_id: parent.authorID}))
-        return collection[1].findOne({_id: parent.authorID})
+        console.log('In books')
+        console.log(collection[1].findOne({_id: ObjectId(parent.authorID)}).then(result => result))
+        return collection[1].findOne({_id: ObjectId(parent.authorID)}).then(result => result)
       }
     }
   })
@@ -108,8 +109,12 @@ const AuthorType = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve: (parent, args) => {
         // return DUMMY_BOOKS.filter(book => book.authorID == parent.id)
-        console.log(collection[0].find({authorID: parent.id}).toArray())
-        return collection[0].find({authorID: parent.id}).toArray()
+        console.log(typeof parent._id)
+        collection[0].find({authorID: String(parent._id)}).toArray((err, res) => {
+          console.error(err)
+          console.log(res)
+        })
+        return collection[0].find({authorID: String(parent._id)}).toArray()
       }
     }
   })
@@ -139,7 +144,7 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve: (parent, args) => {
         // return DUMMY_BOOKS
-        console.log(collection[0].find({}).toArray())
+        // console.log(collection[0].find({}).toArray())
         return collection[0].find({}).toArray()
       }
     },
@@ -147,8 +152,8 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(AuthorType),
       resolve: (parent, args) => {
         // return DUMMY_AUTHORS
-        console.log(collection[1].find().toArray())
-        return collection[1].find().toArray()
+        // console.log(collection[1].find().toArray())
+        return collection[1].find({}).toArray()
       }
     }
   }
