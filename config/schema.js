@@ -7,7 +7,8 @@ const {
   GraphQLID,
   GraphQLString,
   GraphQLInt,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql
 
 let db = null
@@ -23,62 +24,62 @@ MongoClient.connect('mongodb://kay:papaya25@ds157320.mlab.com:57320/graphql-samp
 })
 
 
-const DUMMY_BOOKS = [
-  {
-    id: '1',
-    name: 'Name of the Wind',
-    genre: 'Fantasy',
-    authorID: '1'
-  },
-  {
-    id: '2',
-    name: 'The Final Empire',
-    genre: 'Fantasy',
-    authorID: '2'
-  },
-  {
-    id: '3',
-    name: 'The Long Earth',
-    genre: 'Sci-Fi',
-    authorID: '3'
-  },
-  {
-    id: '4',
-    name: 'The Hero of Ages',
-    genre: 'Fantasy',
-    authorID: '2'
-  },
-  {
-    id: '5',
-    name: 'The Color of Magic',
-    genre: 'Fantasy',
-    authorID: '3'
-  },
-  {
-    id: '6',
-    name: 'The Light Fantastic',
-    genre: 'Fantasy',
-    authorID: '3'
-  }
-]
+// const DUMMY_BOOKS = [
+//   {
+//     id: '1',
+//     name: 'Name of the Wind',
+//     genre: 'Fantasy',
+//     authorID: '1'
+//   },
+//   {
+//     id: '2',
+//     name: 'The Final Empire',
+//     genre: 'Fantasy',
+//     authorID: '2'
+//   },
+//   {
+//     id: '3',
+//     name: 'The Long Earth',
+//     genre: 'Sci-Fi',
+//     authorID: '3'
+//   },
+//   {
+//     id: '4',
+//     name: 'The Hero of Ages',
+//     genre: 'Fantasy',
+//     authorID: '2'
+//   },
+//   {
+//     id: '5',
+//     name: 'The Color of Magic',
+//     genre: 'Fantasy',
+//     authorID: '3'
+//   },
+//   {
+//     id: '6',
+//     name: 'The Light Fantastic',
+//     genre: 'Fantasy',
+//     authorID: '3'
+//   }
+// ]
 
-const DUMMY_AUTHORS = [
-  {
-    id: '1',
-    name: 'Patrick Rothfuss',
-    age: 44
-  },
-  {
-    id: '2',
-    name: 'Brandon Sanderson',
-    age: 42
-  },
-  {
-    id: '3',
-    name: 'Terry Pratchett',
-    age: 66
-  }
-]
+// const DUMMY_AUTHORS = [
+//   {
+//     id: '1',
+//     name: 'Patrick Rothfuss',
+//     age: 44
+//   },
+//   {
+//     id: '2',
+//     name: 'Brandon Sanderson',
+//     age: 42
+//   },
+//   {
+//     id: '3',
+//     name: 'Terry Pratchett',
+//     age: 66
+//   }
+// ]
 
 
 const BookType = new GraphQLObjectType({
@@ -91,8 +92,8 @@ const BookType = new GraphQLObjectType({
       type: AuthorType,
       resolve: (parent, args) => {
         // return DUMMY_AUTHORS.find(author => author.id == parent.authorID)
-        console.log('In books')
-        console.log(collection[1].findOne({_id: ObjectId(parent.authorID)}).then(result => result))
+        // console.log('In books')
+        // console.log(collection[1].findOne({_id: ObjectId(parent.authorID)}).then(result => result))
         return collection[1].findOne({_id: ObjectId(parent.authorID)}).then(result => result)
       }
     }
@@ -109,11 +110,11 @@ const AuthorType = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve: (parent, args) => {
         // return DUMMY_BOOKS.filter(book => book.authorID == parent.id)
-        console.log(typeof parent._id)
-        collection[0].find({authorID: String(parent._id)}).toArray((err, res) => {
-          console.error(err)
-          console.log(res)
-        })
+        // console.log(typeof parent._id)
+        // collection[0].find({authorID: String(parent._id)}).toArray((err, res) => {
+        //   console.error(err)
+        //   console.log(res)
+        // })
         return collection[0].find({authorID: String(parent._id)}).toArray()
       }
     }
@@ -165,8 +166,8 @@ const Mutation = new GraphQLObjectType({
     addAuthor: {
       type: AuthorType,
       args: {
-        name: { type: GraphQLString },
-        age: { type: GraphQLInt }
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve: (parent, args) => {
         let obj = {
@@ -174,7 +175,7 @@ const Mutation = new GraphQLObjectType({
           age: args.age
         }
         return collection[1].insertOne(obj).then(result => {
-          console.log(result.ops[0])
+          // console.log(result.ops[0])
           return result.ops[0]
         })
       }
@@ -182,9 +183,9 @@ const Mutation = new GraphQLObjectType({
     addBook: {
       type: BookType,
       args: {
-        name: { type: GraphQLString },
-        genre: { type: GraphQLString },
-        authorID: { type: GraphQLID }
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
+        authorID: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve: (parent, args) => {
         let obj = {
@@ -193,7 +194,7 @@ const Mutation = new GraphQLObjectType({
           authorID: args.authorID
         }
         return collection[0].insertOne(obj).then(result => {
-          console.log(result.ops[0])
+          // console.log(result.ops[0])
           return result.ops[0]
         })
       }
