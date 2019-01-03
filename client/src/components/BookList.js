@@ -11,7 +11,7 @@ class BookList extends Component {
       return(<div>Loading ...</div>)
     else{
       let books = this.props.data.books
-      return books.map(book => (<li>{book.name}</li>))
+      return books.map(book => (<li key={book._id}>{book.name}</li>))
     }
   }
 

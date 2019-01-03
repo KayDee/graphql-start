@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 
-import { ALL_AUTHORS } from '../queries/queries'
+import { ALL_AUTHORS, ADD_BOOK } from '../queries/queries'
 
 class AddBook extends Component {
   constructor(props){
@@ -13,18 +13,20 @@ class AddBook extends Component {
     }
   }
   displayAllAuthors(){
-    console.log(this.props.data)
-    if(this.props.data.loading)
+    let authors = this.props.ALL_AUTHORS
+    console.log(this.props)
+    if(authors.loading)
       return(<option disabled>Loading authors...</option>)
     else{
-      let authors = this.props.data.authors
-      return authors.map(auth => (<option>{auth.name}</option>))
+      return authors.authors.map(auth => (<option key={auth._id} value={auth._id}>{auth.name}</option>))
     }
   }
 
   submitForm(e){
     e.preventDefault()
-    console.log(this.state)
+    // console.log(this.state)
+    this.ADD_BOOK()
+
   }
 
   render() {
@@ -56,4 +58,7 @@ class AddBook extends Component {
   }
 }
 
-export default graphql(ALL_AUTHORS)(AddBook)
+export default compose(
+  graphql(ALL_AUTHORS, {name: "ALL_AUTHORS"}),
+  graphql(ADD_BOOK, {name: "ADD_BOOK"}),
+)(AddBook)

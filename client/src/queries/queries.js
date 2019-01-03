@@ -5,6 +5,7 @@ const ALL_AUTHORS = gql`
 {
   authors{
     name
+    _id
   }
 }
 `
@@ -12,6 +13,16 @@ const ALL_BOOKS = gql`
 {
   books{
     name
+    _id
+  }
+}
+`
+
+const ADD_BOOK = gql`
+mutation{
+  addBook(name: "",genre: "", authorID: ""){
+    name,
+    _id
   }
 }
 `
@@ -19,5 +30,6 @@ const ALL_BOOKS = gql`
 
 export {
   ALL_AUTHORS,
-  ALL_BOOKS
+  ALL_BOOKS,
+  ADD_BOOK
 }
