@@ -14,7 +14,7 @@ class AddBook extends Component {
   }
   displayAllAuthors(){
     let authors = this.props.ALL_AUTHORS
-    console.log(this.props)
+    // console.log(this.props)
     if(authors.loading)
       return(<option disabled>Loading authors...</option>)
     else{
