@@ -8,7 +8,9 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLScalarType,
+  Kind,
 } = graphql
 
 let db = null
@@ -80,12 +82,38 @@ MongoClient.connect('mongodb://kay:papaya25@ds157320.mlab.com:57320/graphql-samp
 //     age: 66
 //   }
 // ]
-
+const idType = new GraphQLScalarType({
+  // name: 'ObjectId',
+  // description: 'An id string',
+  // serialize: v => {
+  //   console.log("Serialise  " + v)
+  //   ObjectId.valueOf(v)
+  // },
+  // parseValue: v => {
+  //   console.log(v)
+  //   ObjectId.toString(v)
+  // },
+  // parseLiteral: v => v
+  name: "ObjectId",
+  description: "Mongo object id scalar type",
+  parseValue: (value) => {
+    return new ObjectId(value); // value from the client input variables
+  },
+  serialize: (value) => {
+    return value.toHexString(); // value sent to the client
+  },
+  parseLiteral: (ast) => {
+    if (ast.kind === Kind.STRING) {
+      return new ObjectId(ast.value); // value from the client query
+    }
+  }
+  })
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
   fields: () => ({
-    id: { type: GraphQLID },
+    // id: { type: GraphQLID },
+    _id: { type: idType },
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
     author: {
@@ -103,7 +131,8 @@ const BookType = new GraphQLObjectType({
 const AuthorType = new GraphQLObjectType({
   name: 'Author',
   fields: () => ({
-    id: { type: GraphQLID },
+    // id: { type: GraphQLID },
+    _id: { type: idType },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
     books: {
@@ -127,18 +156,18 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     book: {
       type: BookType,
-      args: { id: { type: GraphQLID } },
+      args: { _id: { type: idType } },
       resolve: (parent, args) => {
         // console.log(collection[0].findOne({_id: args.id}).then(result => console.log(result))
-        return collection[0].findOne({_id: ObjectId(args.id)}).then(result => result)
+        return collection[0].findOne({ _id: args._id }).then(result => result)
       }
     },
     author: {
       type: AuthorType,
-      args: { id: { type: GraphQLID } },
+      args: { _id: { type: idType } },
       resolve: (parent, args) => {
         // collection[1].findOne({_id: ObjectId(args.id)}).then(result => console.log(result))
-        return collection[1].findOne({_id: ObjectId(args.id)}).then(result => result)
+        return collection[1].findOne({ _id: args._id }).then(result => result)
       }
     },
     books: {
