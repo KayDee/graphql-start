@@ -19,8 +19,8 @@ const ALL_BOOKS = gql`
 `
 
 const ADD_BOOK = gql`
-mutation{
-  addBook(name: "",genre: "", authorID: ""){
+mutation($name: String!, $genre: String!, $authorID: ID!){
+  addBook(name: $name, genre: $genre, authorID: $authorID){
     name,
     _id
   }

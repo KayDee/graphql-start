@@ -25,7 +25,13 @@ class AddBook extends Component {
   submitForm(e){
     e.preventDefault()
     // console.log(this.state)
-    this.ADD_BOOK()
+    this.props.ADD_BOOK({
+      variables: {
+        name: this.state.name,
+        genre: this.state.genre,
+        authorID: this.state.authorID
+      }
+    })
 
   }
 
