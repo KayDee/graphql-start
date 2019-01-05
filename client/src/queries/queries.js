@@ -27,9 +27,27 @@ mutation($name: String!, $genre: String!, $authorID: ID!){
 }
 `
 
+const BOOK_INFO = gql`
+query($id: ID!){
+  book(_id: $id){
+    name
+    genre
+    author{
+      name
+      age
+      books{
+        name
+        genre
+      }
+    }
+  }
+}
+`
+
 
 export {
   ALL_AUTHORS,
   ALL_BOOKS,
-  ADD_BOOK
+  ADD_BOOK,
+  BOOK_INFO
 }
