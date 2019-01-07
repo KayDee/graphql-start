@@ -20,17 +20,17 @@ class BookList extends Component {
       return(<div>Loading ...</div>)
     else{
       let books = this.props.data.books
-      return books.map(book => (<li key={book._id} onClick={(e) => this.setState({selected: book._id})}>{book.name}</li>))
+      // return books.map(book => (<li key={book._id} onClick={(e) => this.setState({selected: book._id})}>{book.name}</li>))
+      return books.map(book => (<li key={book._id} onClick={(e) => this.props.selectBook(book._id)}>{book.name}</li>))
     }
   }
 
   render() {
     return (
-      <div>
-        <ul id="book-list">
+      <div id="book-list">
+        <ul>
           { this.displayAllBooks() }
         </ul>
-        <BookInfo bookId={this.state.selected}/>
       </div>
     )
   }

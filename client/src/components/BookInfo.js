@@ -13,9 +13,9 @@ class BookInfo extends Component {
     const { book } = this.props.data
     if(book){
       return (<div>
-        <h3>{ book.name }</h3>
+        <h2>{ book.name }</h2>
         <span>{ book.genre }</span>
-        <p>{ `By - ${book.author.name}` }</p>
+        <h4>By - <b>{ book.author.name }</b></h4>
         <span>More books by this author</span>
         <ul className="other-books">
           { book.author.books.map(newBook => (<li key={newBook._id}>{ newBook.name }</li>)) }
