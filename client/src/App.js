@@ -16,7 +16,6 @@ class App extends Component {
     this.state = {
       selected: null
     }
-    // this.selectBook = this.selectBook.bind
   }
   selectBook = (book) => {
     this.setState({selected: book})
