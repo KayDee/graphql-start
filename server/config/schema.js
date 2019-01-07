@@ -1,6 +1,8 @@
+require('dotenv').config()
 const graphql = require('graphql')
 const { MongoClient, ObjectId } = require('mongodb')
 
+// dot.load()
 const {
   GraphQLSchema,
   GraphQLObjectType,
@@ -15,7 +17,7 @@ const {
 
 let db = null
 let collection = [] // [ Book_Collection , Author_Collection ]
-MongoClient.connect('mongodb://kay:papaya25@ds157320.mlab.com:57320/graphql-sample', {useNewUrlParser: true}, (err, client) => {
+MongoClient.connect(`mongodb://${process.env.username}:${process.env.pass}@ds157320.mlab.com:57320/graphql-sample`, {useNewUrlParser: true}, (err, client) => {
   if(err)
     console.error(err)
   else{
