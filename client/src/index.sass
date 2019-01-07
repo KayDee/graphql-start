@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito')
+
+body 
+  margin: 0
+  padding: 0
+  font-family: Nunito
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  background: #ddd
+
+
+code 
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New"
+
+.App 
+  h1
+    text-align: center
+    color: #36374B
+
+#book-list
+  width: 40%
+  li
+    display: inline-block
+    margin: 10px
+    padding: 10px
+    border: 3px solid #2A8B7E
+    border-radius: 5px
+    box-shadow: -1px 2px 5px rgba(0,0,0,0.2)
+    cursor: pointer
+
+#add-book
+  position: relative
+  bottom: 0
+  left: 0
+  width: 40%
+  padding: 2rem
+  background-color: #fff
+  --height: 30px
+  .field
+    display: grid
+    grid-template-columns: 30% 70%
+    grid-gap: 5px
+    margin: 5px 0
+    label
+      text-align: center
+      line-height: var(--height)
+    input, select
+      height: var(--height)
+      padding: 4px
+      box-sizing: border-box
+  button
+    width: var(--height)
+    height: var(--height)
+    border-radius: 50%
+    background: #2A8B7E
+    color: #fff
+    padding: 0 10px
+    border: 0
+    font-size: 1.15em
+    line-height: var(--height)
+
+
+  
+
+
+
+

@@ -28,7 +28,7 @@ mutation($name: String!, $genre: String!, $authorID: ID!){
 `
 
 const BOOK_INFO = gql`
-query($id: ID!){
+query($id: ObjectId!){
   book(_id: $id){
     name
     genre
@@ -36,6 +36,7 @@ query($id: ID!){
       name
       age
       books{
+        _id
         name
         genre
       }

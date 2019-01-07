@@ -6,9 +6,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #ddd;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+}
+.App h1{
+  text-align: center;
+  color: #36374B;
+}
+#book-list
+#book-list li{
+  display: inline-block;
+
 }

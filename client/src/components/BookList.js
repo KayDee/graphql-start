@@ -29,8 +29,8 @@ class BookList extends Component {
       <div>
         <ul id="book-list">
           { this.displayAllBooks() }
-          <BookInfo bookId={this.state.selected}/>
         </ul>
+        <BookInfo bookId={this.state.selected}/>
       </div>
     )
   }
