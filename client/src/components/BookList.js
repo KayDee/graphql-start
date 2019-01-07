@@ -3,9 +3,6 @@ import { graphql } from 'react-apollo'
 
 import { ALL_BOOKS } from '../queries/queries'
 
-import BookInfo from './BookInfo'
-
-
 class BookList extends Component {
   constructor(props){
     super(props)
